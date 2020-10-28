@@ -6,7 +6,6 @@ function Connect(sbAppId, sbUserId) {
         if (error) {
             return;
         }
-        console.log(user);
     });
 }
 
