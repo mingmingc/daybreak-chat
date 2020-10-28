@@ -1,25 +1,13 @@
-import react from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
-import './App.css';
-import Sendbird from 'sendbird';
+import {APP_ID, USER_ID} from './const';
 import Dashboard from './components/Dashboard';
+import Chat from './components/Chat';
+import Connect from './Connect';
+import './App.css';
 
 function App() {
-  const apiToken = process.env.REACT_APP_API_TOKEN;
-  const requestUrl = process.env.REACT_APP_REQUEST_URL;
-  const sbAppId = process.env.REACT_APP_APP_ID;
-  const sbUserId = 'testUser';
+  Connect(APP_ID, USER_ID);
 
-  let sb = new Sendbird({appId: sbAppId});
-  
-  sb.connect(sbUserId, function(user, error) {
-    if (error) {
-        return;
-    }
-    console.log(user);
-  });
-
-  
   // let applicationUserListQuery = sb.createApplicationUserListQuery();
   // applicationUserListQuery.next(function(users, error) {
   //   if (error) {
@@ -67,7 +55,8 @@ function App() {
     <div className="App">
       <Switch>
         <Redirect exact from="/" to="/dashboard" />
-        <Route path="/dashboard" component={(props) => <Dashboard {...props} userId={sbUserId} />} />
+        <Route path="/dashboard" component={(props) => <Dashboard {...props}/>} />
+        <Route path="/chat" component={Chat} />
       </Switch>
     </div>
   );
