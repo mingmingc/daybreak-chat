@@ -33,7 +33,7 @@ class Dashboard extends Component {
     render() {
         return(
             <div className="Dashboard">
-                <h1> Welcome, {this.userId} </h1>
+                <h1 className="title is-1"> Welcome, {this.userId} </h1>
                 <DashboardChatList channels = {this.state.channels}/> 
             </div>
         )
