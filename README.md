@@ -13,7 +13,7 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `yarn tests`
+### `yarn test`
 
 Runs all tests in `__test__` folder.<br />
 
