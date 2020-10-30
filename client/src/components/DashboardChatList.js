@@ -17,7 +17,10 @@ const DashboardChatList = (props) => {
             <div className="chat card" key={friendName(channel)}>
                 <div className="card-content">
                     <p className="title">{friendName(channel)}</p>
-                    <Link to="/chat">Go to chat</Link>
+                    <Link to={{
+                        pathname: "/chat",
+                        state: { channelUrl: channel.url }
+                    }}>Go to chat</Link>
                 </div>
             </div>
         );
