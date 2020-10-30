@@ -11,9 +11,10 @@ class Dashboard extends Component {
         }
         this.userId = USER_ID;
         this.sb = _getSbInstance();
+        this.getChannels = this.getChannels.bind(this);
     }
 
-    componentDidMount() { 
+    getChannels() {
         let allUserChannels = this.sb.GroupChannel.createMyGroupChannelListQuery();
         allUserChannels.includeEmpty = true;
         allUserChannels.userIdsIncludeFilter = [this.userId];
@@ -29,12 +30,16 @@ class Dashboard extends Component {
             });
         });
     }
+
+    componentDidMount() { 
+        this.getChannels();
+    }
      
     render() {
         return(
             <div className="Dashboard">
                 <h1 className="title is-1"> Welcome, {this.userId} </h1>
-                <DashboardChatList channels = {this.state.channels}/> 
+                <DashboardChatList channels={this.state.channels}/> 
             </div>
         )
     }

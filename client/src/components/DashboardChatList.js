@@ -12,14 +12,12 @@ const DashboardChatList = (props) => {
 
     let chatList = channels.map((channel => {
         return (
-            <div className="card" key={friendName(channel)}>
+            <div className="chat card" key={friendName(channel)}>
                 <div className="card-content">
                     <p className="title">
                     {friendName(channel)}
                     </p>
-                    <p className="card-footer">
-                        <a href={channel.url}>Go to chat</a>
-                    </p>
+                    <a channelUrl={channel.url}>Go to chat</a>
                 </div>
             </div>
         );
