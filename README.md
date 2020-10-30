@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `yarn test`
 
-Runs all tests in `__test__` folder.<br />
+Runs all tests in `__tests__` folder.<br />
 
 ### `yarn build`
 
