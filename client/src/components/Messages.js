@@ -1,9 +1,11 @@
 import React from 'react';
 
 const Messages = (props) => {
-    
+
     return (
-        <div> Messages here! </div>
+        <div>
+            Messages here!
+        </div>
     )
 }
 
