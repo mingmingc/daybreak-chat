@@ -3,7 +3,6 @@ import {APP_ID, USER_ID} from './const';
 import Dashboard from './components/Dashboard';
 import Chat from './components/Chat';
 import Connect from './Connect';
-import './App.css';
 
 function App() {
   Connect(APP_ID, USER_ID);

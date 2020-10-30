@@ -9,14 +9,20 @@ const Chat = (props) => {
     const channelUrl = props.location.state.channelUrl ? props.location.state.channelUrl : null;
     const friendId = props.location.state.friendId;
     const [_messages, setMessages] = useState([]);
+    const [inputValue, setInputVal] = useState("");
 
     useEffect(() => {
         retrieveMessages();
     }, []);
 
+    const onHandleChange = (e) => {
+        setInputVal(e.target.value);
+    }
+
     const onKeyUp = (e) => {
         if (e.charCode === 13) {
             sendMessage(e.target.value);
+            setInputVal("");
         }
     }
 
@@ -58,12 +64,16 @@ const Chat = (props) => {
 
     return(
         <div className="Chat container">
-            <Link to="/dashboard">Back to Chats</Link>
+            <Link to="/dashboard"> &lt; Back to Chats</Link>
             <h1 className="title is-2">Chat with {friendId}</h1>
             <Messages messagesToRender={_messages}/>
-            <textarea className="textarea is-medium" 
-                id="send-msg" 
-                placeholder="Send a message" onKeyPress={onKeyUp}></textarea>
+            <textarea className="textarea is-medium"
+                id="msg-input" 
+                placeholder="Send a message" 
+                onChange={onHandleChange}
+                value={inputValue}
+                onKeyPress={onKeyUp}
+                ></textarea>
         </div>
     )
 }
