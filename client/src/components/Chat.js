@@ -6,7 +6,7 @@ import Messages from './Messages';
 
 const Chat = (props) => {
     const sb = _getSbInstance();
-    const channelUrl = props.location.state.channelUrl;
+    const channelUrl = props.location.state.channelUrl ? props.location.state.channelUrl : "sendbird_group_channel_76162505_57283ee649cd7aeeee0cf99c7d4974485cc36c8b";
     const friendId = props.location.state.friendId;
     const [_messages, setMessages] = useState([]);
     const [inputValue, setInputVal] = useState("");
@@ -42,6 +42,7 @@ const Chat = (props) => {
                 if (error) {
                     return;
                 }
+                console.log(message);
                 retrieveMessages();
             });
         });
