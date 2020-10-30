@@ -6,14 +6,18 @@ import Messages from './Messages';
 
 const Chat = (props) => {
     const sb = _getSbInstance();
-    const channelUrl = props.location.state.channelUrl ? props.location.state.channelUrl : null;
+    const channelUrl = props.location.state.channelUrl;
     const friendId = props.location.state.friendId;
     const [_messages, setMessages] = useState([]);
     const [inputValue, setInputVal] = useState("");
 
     useEffect(() => {
         retrieveMessages();
-    }, []);
+        addChannelHandler();
+        return () => {
+            sb.removeChannelHandler("handlerId");
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onHandleChange = (e) => {
         setInputVal(e.target.value);
@@ -38,7 +42,7 @@ const Chat = (props) => {
                 if (error) {
                     return;
                 }
-                console.log(message);
+                retrieveMessages();
             });
         });
     }
@@ -48,18 +52,23 @@ const Chat = (props) => {
             if (error) {
                 return;
             }
-
-            // There should only be one single instance per channel view.
             let prevMessageListQuery = groupChannel.createPreviousMessageListQuery();
             prevMessageListQuery.limit = MESSAGE_LIMIT;
             prevMessageListQuery.load(function(messages, error) {
                 if (error) {
                     return;
                 }
-
                 setMessages(messages);
             });
         });
+    }
+
+    const addChannelHandler = () => {
+        const channelHandler = new sb.ChannelHandler();
+        channelHandler.onMessageReceived = function(channel, message) {
+            retrieveMessages();
+        };
+        sb.addChannelHandler("handlerId", channelHandler);
     }
 
     return(
