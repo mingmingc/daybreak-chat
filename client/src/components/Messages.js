@@ -1,12 +1,19 @@
 import React from 'react';
 
 const Messages = (props) => {
+    const messages = props.messagesToRender;
+    
 
-    return (
-        <div>
-            Messages here!
-        </div>
-    )
+    let renderMessages = messages.map(message => {
+        return (
+            <div className="my-1" key={message.messageId}>
+                <p><strong>{message._sender.userId} {message.createdAt}</strong></p>
+                <p>{message.message}</p>
+            </div>
+        )
+    })
+
+    return (renderMessages);
 }
 
 export default Messages;
