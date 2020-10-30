@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Sendbird from 'sendbird';
 import { USER_ID } from '../const';
 import { _getSbInstance } from '../utils';
+import Messages from './Messages';
 
 class Chat extends Component {
     constructor(props) {
         super(props);
         this.sb = _getSbInstance();
-        this.channelUrl = this.props.channelUrl ? this.props.channelUrl : null;
+        this.channelUrl = this.props.location.state.channelUrl ? this.props.location.state.channelUrl : null;
         this.userId = USER_ID;
         this.friendId = 'mingmingc';
         this.createNewChannel = this.createNewChannel.bind(this);      
@@ -15,7 +15,7 @@ class Chat extends Component {
     }
         
     createNewChannel(friendId) {
-        let params = new Sendbird.GroupChannelParams();
+        let params = this.sb.GroupChannelParams();
         params.isPublic = false;
         params.isDistinct = true;
         params.addUserIds([this.userId, friendId])
@@ -31,7 +31,6 @@ class Chat extends Component {
     }
 
     _getChannel() {
-        console.log(this.channelUrl);
         this.sb.GroupChannel.getChannel(this.channelUrl, function(groupChannel, error) {
             if (error) {
                 return;
@@ -49,6 +48,7 @@ class Chat extends Component {
         return(
             <div className="Chat">
                 <h1>Chat with {this.friendId}</h1>
+                <Messages channelUrl={this.channelUrl}/>
             </div>
         )
     }
