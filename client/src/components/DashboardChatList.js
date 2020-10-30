@@ -14,7 +14,7 @@ const DashboardChatList = (props) => {
 
     let chatList = channels.map((channel => {
         return (
-            <div className="card" key={friendName(channel)}>
+            <div className="chat card" key={friendName(channel)}>
                 <div className="card-content">
                     <p className="title">{friendName(channel)}</p>
                     <Link to="/chat">Go to chat</Link>

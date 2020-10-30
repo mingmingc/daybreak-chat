@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should call function 1`] = `
+<div
+  className="Dashboard"
+>
+  <h1
+    className="title is-1"
+  >
+     Welcome, 
+    testUser
+     
+  </h1>
+</div>
+`;
