@@ -1,57 +1,46 @@
-import React, { Component } from 'react';
-import { USER_ID } from '../const';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { _getSbInstance } from '../utils';
 import Messages from './Messages';
 
-class Chat extends Component {
-    constructor(props) {
-        super(props);
-        this.sb = _getSbInstance();
-        this.channelUrl = this.props.location.state.channelUrl ? this.props.location.state.channelUrl : null;
-        this.userId = USER_ID;
-        this.friendId = 'mingmingc';
-        this.createNewChannel = this.createNewChannel.bind(this);      
-        this._getChannel = this._getChannel.bind(this);  
+const Chat = (props) => {
+    const sb = _getSbInstance();
+    const channelUrl = props.location.state.channelUrl ? props.location.state.channelUrl : null;
+    const friendId = props.location.state.friendId;
+
+    const onKeyUp = (e) => {
+        if (e.charCode === 13) {
+            sendMessage(e.target.value);
+        }
     }
-        
-    createNewChannel(friendId) {
-        let params = this.sb.GroupChannelParams();
-        params.isPublic = false;
-        params.isDistinct = true;
-        params.addUserIds([this.userId, friendId])
-    
-        this.sb.GroupChannel.createChannel(params, function(groupChannel, error) {
+
+    const sendMessage = (userMsg) => {
+        sb.GroupChannel.getChannel(channelUrl, function(groupChannel, error) {
             if (error) {
                 return;
             }
 
-            this.channelUrl = groupChannel.url;
-            this._getChannel();
+            const messageParams = new sb.UserMessageParams();
+            messageParams.message = userMsg;
+            groupChannel.sendUserMessage(messageParams, function(message, error) {
+                if (error) {
+                    return;
+                }
+                console.log(message);
+            });
         });
     }
 
-    _getChannel() {
-        this.sb.GroupChannel.getChannel(this.channelUrl, function(groupChannel, error) {
-            if (error) {
-                return;
-            }
-        
-            console.log(groupChannel);
-        });
-    }
-
-    componentDidMount() {
-        this._getChannel();
-    }
-
-    render() {
-        return(
-            <div className="Chat">
-                <h1>Chat with {this.friendId}</h1>
-                <Messages channelUrl={this.channelUrl}/>
-            </div>
-        )
-    }
+    return(
+        <div className="Chat">
+            <Link to="/dashboard">Back to Chats</Link>
+            <h1 className="title is-2">Chat with {friendId}</h1>
+            <Messages />
+            <textarea className="textarea is-medium" 
+                id="send-msg" 
+                placeholder="Send a message" onKeyPress={onKeyUp}></textarea>
+        </div>
+    )
 }
 
 export default Chat;
