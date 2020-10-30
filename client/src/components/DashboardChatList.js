@@ -1,8 +1,10 @@
 import React from 'react';
 import { USER_ID } from '../const';
+import { Link } from 'react-router-dom';
 
 const DashboardChatList = (props) => {
     const channels = props.channels;
+
     const friendName = (channel) => {
         if (channel.members[0].userId !== USER_ID) {
             return channel.members[0].userId;
@@ -14,10 +16,8 @@ const DashboardChatList = (props) => {
         return (
             <div className="chat card" key={friendName(channel)}>
                 <div className="card-content">
-                    <p className="title">
-                    {friendName(channel)}
-                    </p>
-                    <a channelUrl={channel.url}>Go to chat</a>
+                    <p className="title">{friendName(channel)}</p>
+                    <Link to="/chat">Go to chat</Link>
                 </div>
             </div>
         );
