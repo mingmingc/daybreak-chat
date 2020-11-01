@@ -18,14 +18,13 @@ class Dashboard extends Component {
     getChannels() {
         let allUserChannels = this.sb.GroupChannel.createMyGroupChannelListQuery();
         allUserChannels.includeEmpty = true;
-        allUserChannels.userIdsIncludeFilter = [this.userId];
+        allUserChannels.userIdsIncludeFilter = [ this.userId ];
         return new Promise((resolve, reject) => {
             allUserChannels.next((myChannels, error) => {
               if (error) {
                 reject(error);
               } else {
                 resolve(myChannels);
-                console.log(myChannels);
                 this.setState({channels: myChannels})
               }
             });

@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
-import renderer from 'react-test-renderer';
+import { shallow, mount } from 'enzyme';
+import { cleanup } from '@testing-library/react';
 import '../setupTests';
-import Dashboard from '../components/Dashboard';
+import Dashboard, { getChannels } from '../components/Dashboard';
 import DashboardChatList from '../components/DashboardChatList';
 
 jest.mock('../components/Dashboard'); 
-jest.mock('../components/DashboardChatList'); 
+afterEach(cleanup); 
+
+it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Dashboard />, div);
+    ReactDOM.unmountComponentAtNode(div);
+})
 
 it('invokes `componentDidMount` when mounted', () => {
     jest.spyOn(Dashboard.prototype, 'componentDidMount');
@@ -16,35 +22,55 @@ it('invokes `componentDidMount` when mounted', () => {
     Dashboard.prototype.componentDidMount.mockRestore();
 });
 
-const testChannels = [
-    { members: [
-            { name: "testFriend", url: "" },
-            { name: "testFriend1", url: "" }
-        ]
-    },
-    { members: [
-            { name: "testFriend2", url: "" },
-            { name: "testFriend3", url: "" }
-        ]
-    }
-]
+it('calls getChannels when mounted', () => {
+    const spy = jest.spyOn(Dashboard.prototype, 'getChannels');
+    const wrapper = mount(<Dashboard />);
+    wrapper.instance().getChannels();
+    expect(spy).toHaveBeenCalled();
+})
 
-describe('getChannels', () => {
-    const wrapper = shallow(<Dashboard />);
-    const instance = wrapper.instance();
-    jest.spyOn(instance, 'getChannels');
-    instance.componentDidMount();
-    it('calls `getChannels` when mounted', () => {
-        expect(instance.getChannels).toHaveBeenCalled();
-    });
-    it('returns promise', () => {
-        expect(instance.getChannels).toHaveReturned();
-    });
-});
+// describe('DashboardChatList', () => {
+//     it('renders <DashboardChatList />', () => {
 
-;
+//     })
+// })
 
+
+
+
+// describe('getChannels', () => {
+//     const spy = jest.spyOn(Dashboard.prototype, 'getChannels');
+//     const wrapper = mount(<Dashboard />);
+//     wrapper.instance().getChannels();
+    
+//     it('calls `getChannels` when mounted', () => {
+//         expect(spy).toHaveBeenCalled();
+//     });
+    // it('returns promise', () => {
+    //     expect(spy).toHaveReturned();
+    // });
+
+//     afterEach(() => {
+//         spy.mockClear()
+//     })
+// });
+
+
+
+//****ADD TO DashboardChatList component instead
 // describe('Render all channels', () => {
+//     const testChannels = [
+//         { members: [
+//                 { name: "testFriend", url: "" },
+//                 { name: "testFriend1", url: "" }
+//             ]
+//         },
+//         { members: [
+//                 { name: "testFriend2", url: "" },
+//                 { name: "testFriend3", url: "" }
+//             ]
+//         }
+//     ]
 //     test('it should render expected number of channels', () => {
 //         shallow(<Dashboard channels={testChannels}><DashboardChatList /></Dashboard>);
 //         expect(document.querySelectorAll('.chat').length).toBe(testChannels.length)
