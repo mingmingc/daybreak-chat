@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { USER_ID } from '../const';
-import { _getSbInstance } from '../utils';
+import { getSbInstance } from '../utils';
 import DashboardChatList from './DashboardChatList';
 
 class Dashboard extends Component {
@@ -10,7 +10,7 @@ class Dashboard extends Component {
             channels: []
         }
         this.userId = USER_ID;
-        this.sb = _getSbInstance();
+        this.sb = getSbInstance();
       
         this.getChannels = this.getChannels.bind(this);
     }

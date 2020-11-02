@@ -1,12 +1,12 @@
 import Sendbird from 'sendbird';
 import { USER_ID } from './const';
 
-export function _getSbInstance() {
+export function getSbInstance() {
     return Sendbird.getInstance();
 }
 
 export function createNewChannel(friendId) {
-    const sb = _getSbInstance();
+    const sb = getSbInstance();
     let params = new sb.GroupChannelParams();
     params.isPublic = false;
     params.isDistinct = true;

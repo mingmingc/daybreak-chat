@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { _getSbInstance } from '../utils';
+import { getSbInstance } from '../utils';
 import { MESSAGE_LIMIT } from '../const';
 import Messages from './Messages';
 
 const Chat = (props) => {
-    const sb = _getSbInstance();
+    const sb = getSbInstance();
     const channelUrl = props.location.state.channelUrl ? props.location.state.channelUrl : "sendbird_group_channel_76162505_57283ee649cd7aeeee0cf99c7d4974485cc36c8b";
     const friendId = props.location.state.friendId;
-    const [_messages, setMessages] = useState([]);
+    const [chatMessages, setMessages] = useState([]);
     const [inputValue, setInputVal] = useState("");
 
     useEffect(() => {
@@ -76,7 +76,7 @@ const Chat = (props) => {
         <div className="Chat container">
             <Link to="/dashboard"> &lt; Back to Chats</Link>
             <h1 className="title is-2">Chat with {friendId}</h1>
-            <Messages messagesToRender={_messages}/>
+            <Messages messagesToRender={chatMessages}/>
             <textarea className="textarea is-medium"
                 id="msg-input" 
                 placeholder="Send a message" 
